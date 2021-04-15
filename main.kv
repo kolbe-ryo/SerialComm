@@ -1,0 +1,215 @@
+MainRoot:
+
+<MainRoot>
+    Test
+
+# Regist view
+###########################################################
+<Maindisplay@BoxLayout>
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+
+        # Title
+        BoxLayout:
+            size_hint_y: 0.1
+            BoxLayout:
+                orientation: 'horizontal'
+                TitleLabel:
+                    size_hint_x: 0.6
+                    text: 'Process Indent'
+                    color: (153/255,255/255,102/255,255/255)
+                MainLabel:
+                    size_hint_x: 0.3
+                    halign: 'right'
+                    text: 'PORT'
+                Conditions:
+                    size_hint_x: 0.1
+                    id: comPort
+                    hint_text: '1'
+
+        # Output information
+        BoxLayout:
+            size_hint_y: 0.1
+            BoxLayout:
+                orientation: 'horizontal'
+                SpaceLine:
+                    size_hint_x: 0.01
+                MainLabel:
+                    id: outputText
+                    size_hint_x: 0.98
+                    text: ''
+                SpaceLine:
+                    size_hint_x: 0.01
+
+        # YYMMDD call
+        BoxLayout:
+            size_hint_y: 0.1
+            BoxLayout:
+                orientation: 'horizontal'
+                SpaceLine:
+                    size_hint_x: 0.01
+                Conditions:
+                    id: yy
+                    focus: True
+                    hint_text: 'YY'
+                    size_hint_x: 0.15
+                    on_text: app.root.checkYYLen(yy.text)
+                SpaceLine:
+                    size_hint_x: 0.01
+                Conditions:
+                    id: mm
+                    focus: True
+                    hint_text: 'MM'
+                    size_hint_x: 0.15
+                    on_text: app.root.checkMMLen(mm.text)
+                SpaceLine:
+                    size_hint_x: 0.01
+                Conditions:
+                    id: w
+                    focus: True
+                    hint_text: 'W'
+                    size_hint_x: 0.15
+                    on_text: app.root.checkWLen(w.text)
+                SpaceLine:
+                    size_hint_x: 0.01
+                Conditions:
+                    id: dd
+                    focus: True
+                    hint_text: 'DD'
+                    size_hint_x: 0.15
+                SpaceLine:
+                    size_hint_x: 0.01
+                Return_Button:
+                    size_hint_x: 0.33
+                    text: 'Call'
+                    on_press: app.root.callInformation()
+                SpaceLine:
+                    size_hint_x: 0.01
+        
+        BoxLayout:
+            size_hint_y: 0.01
+
+        # Back Go button
+        BoxLayout:
+            size_hint_y: 0.1
+            BoxLayout:
+                orientation: 'horizontal'
+                SpaceLine:
+                    size_hint_x: 0.01
+                Return_Button:
+                    size_hint_x: 0.48
+                    on_press: app.root.backText()
+                    Images:
+                        source: 'img/back.png'
+                SpaceLine:
+                    size_hint_x: 0.01
+                Return_Button:
+                    size_hint_x: 0.49
+                    on_press: app.root.proceedText()
+                    Images:
+                        source: 'img/proceed.png'
+                SpaceLine:
+                    size_hint_x: 0.01
+        
+        BoxLayout:
+            size_hint_y: 0.01
+
+        # Send button
+        BoxLayout:
+            size_hint_y: 0.1
+            BoxLayout:
+                orientation: 'horizontal'
+                SpaceLine:
+                    size_hint_x: 0.01
+                Return_Button:
+                    size_hint_x: 0.98
+                    text: 'Send Indent'
+                    on_release: app.root.sendSignal()
+                SpaceLine:
+                    size_hint_x: 0.01
+        
+        BoxLayout:
+            size_hint_y: 0.01
+
+
+<Test@BoxLayout>
+    Return_Button:
+        size_hint_x: 0.2
+        text: 'Start'
+        on_press: app.root.change_disp0()
+
+
+# Global class
+###########################################################
+<Conditions@TextInput>
+    padding: [10, (self.height-self.line_height)/2]
+    text: ''
+    italic: True
+    font_size: 15
+
+<MainLabel@Label>
+    padding: [10, (self.height-self.line_height)/2]
+    italic: True
+    bold: True
+    text_size: self.size
+    font_size: 15
+    halign: 'center'
+    valign: 'middle'
+
+<TitleLabel@Label>
+    padding: [10, (self.height-self.line_height)/2]
+    italic: True
+    bold: True
+    text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+    font_size: 20
+
+<Return_Button@Button>
+    id: send
+    italic: True
+    bold: True
+    font_size: 15
+    
+
+<SpaceLine@Label>
+    BoxLayout:
+        Label:
+
+
+<Images@Image>
+    center_y: self.parent.y + self.parent.height/2
+    center_x: self.parent.x + self.parent.width/2
+    keep_ratio: True
+    size: 45, 45
+    allow_stretch: True
+    
+
+#<GraphView>: # For showing figure
+
+# Popup class
+###########################################################
+<FinishPopup>:
+    id:pop
+    auto_dismiss: True
+    size_hint: 0.5, 0.5
+    title: '<Confirmation>'
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            Label:
+                text: 'End All!'
+
+
+<CausionPopup>:
+    id:pop
+    auto_dismiss: False
+    size_hint: 0.5, 0.5
+    title: '<Causion>'
+    BoxLayout:
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                id: causion
+                text: ''
